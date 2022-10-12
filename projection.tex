@@ -1,0 +1,88 @@
+\RequirePackage[2020-02-02]{latexrelease}
+\documentclass[11pt,dvips]{article}
+%\documentclass[12pt,dvips]{article}
+%\documentclass[preprint,dvips,numbers,sort&compress]{elsarticle}
+%\documentclass[12pt,review,dvips,numbers,sort&compress]{elsarticle}
+% Geometry.
+\usepackage{geometry}
+\geometry{a4paper,
+left=2cm,
+right=2cm,
+top=2cm,
+bottom=2cm,
+}
+% Global functionalities.
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+% encoding.
+\usepackage[utf8]{inputenc}
+% Mathematics.
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{arydshln}
+% Authoring.
+%\usepackage{authblk}
+\usepackage[printwatermark]{xwatermark}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{paralist}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{setspace}
+%\usepackage{lmodern}
+
+\newwatermark[allpages,color=black!30,angle=45,scale=3,xpos=0,ypos=0]%
+{DRAFT}
+
+%\doublespacing
+
+\graphicspath{{turgon_eps/}}
+
+\renewcommand{\figurename}{Fig.}
+\newcommand{\topcaption}{%
+\setlength{\abovecaptionskip}{0pt}%
+\setlength{\belowcaptionskip}{10pt}%
+\caption}
+\numberwithin{equation}{section}
+
+\newcommand{\defeq}{\ensuremath{\buildrel {\text{def}}\over{=}}}
+
+\title{
+%
+(Drafting) Projection Method
+%
+}
+
+\author{
+%
+%
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+%
+%
+\end{abstract}
+
+\section{Projection Method}
+%
+\label{s:projection}
+
+TBA.
+
+\clearpage
+
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliographystyle{myunsrtnat} % no sort (order in appearance)
+\bibliographystyle{myplainnat} % sort by author
+\bibliography{turgon_main}
+
+\end{document}
+
+% vim: set ai et sw=2 ts=2 tw=79:

@@ -1,0 +1,4 @@
+# This is an example for an optional configuration file setup.mk for the
+# Makefile
+PYTHONPATH := $(HOME)/work/modmesh:$(PYTHONPATH)
+export PYTHONPATH

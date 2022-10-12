@@ -53,10 +53,10 @@ ALL_EPS := $(patsubst $(SCHEMATIC_DIR)/%.tex,$(EPS_DIR)/%.eps,$(ALL_TEX)) \
 	$(patsubst $(SCHEMATIC_DIR)/%.py,$(EPS_DIR)/%.eps,$(ALL_SCHPY))
 
 .PHONY: default
-default: note mesh
+default: cese mesh
 
 .PHONY: ho
-ho: note_ho mesh_ho
+ho: cese_ho mesh_ho
 
 .PHONY: eps
 eps: $(ALL_EPS)
@@ -107,11 +107,11 @@ $(EPS_DIR)/%.png: $(SCHEMATIC_DIR)/%.py
 	mkdir -p $(LOG_DIR) ; \
 	$(PS2PDF) $< 2>&1 | tee $(LOG_DIR)/$@.log $(CMDLOG_DIR_REDIRECT)
 
-.PHONY: note
-note: cese_note.pdf
+.PHONY: cese
+cese: cese.pdf
 
-.PHONY: note_ho
-note_ho: cese_note.pdf
+.PHONY: cese_ho
+cese_ho: cese.pdf
 	@echo "Generating today's PDF: $(HANDOVER_FN)"
 	mkdir -p $(HANDOVER_DIR)
 	cp -f $< $(HANDOVER_FN)
@@ -125,9 +125,19 @@ mesh_ho: ustmesh.pdf
 	mkdir -p $(HANDOVER_DIR)
 	cp -f $< $(HANDOVER_FN)
 
+.PHONY: projection
+projection: projection.pdf
+
+.PHONY: projection_ho
+projection_ho: projection.pdf
+	@echo "Generating today's PDF: $(HANDOVER_FN)"
+	mkdir -p $(HANDOVER_DIR)
+	cp -f $< $(HANDOVER_FN)
+
 .PHONY: clean_tex
 clean_tex:
-	rm -f *.aux *.bbl *.blg *.dvi *.log *.out *.xwm *.toc *.pdf *.ps
+	rm -f *.aux *.bbl *.blg *.dvi *.log *.out *.xwm *.toc *.pdf *.ps \
+		*.fdb_latexmk *.fls *.pdfsync *.synctex.gz
 
 .PHONY: clean_log
 clean_log:

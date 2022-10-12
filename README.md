@@ -1,5 +1,7 @@
 # Note for modmesh
 
+(C) 2022 copyright Yung-Yu Chen.  All rights reserved.
+
 This repository houses theoretical and numerical notes for the code being
 developed in https://github.com/solvcon/modmesh.
 

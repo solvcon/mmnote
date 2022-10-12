@@ -53,10 +53,13 @@ ALL_EPS := $(patsubst $(SCHEMATIC_DIR)/%.tex,$(EPS_DIR)/%.eps,$(ALL_TEX)) \
 	$(patsubst $(SCHEMATIC_DIR)/%.py,$(EPS_DIR)/%.eps,$(ALL_SCHPY))
 
 .PHONY: default
-default: cese mesh
+default: cese mesh projection
+
+.PHONY: all
+all: default
 
 .PHONY: ho
-ho: cese_ho mesh_ho
+ho: cese_ho mesh_ho projection_ho
 
 .PHONY: eps
 eps: $(ALL_EPS)

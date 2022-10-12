@@ -74,11 +74,138 @@ bottom=2cm,
 %
 \end{abstract}
 
-\section{Projection Method}
 %
 \label{s:projection}
+\section{Govern equations for 2D incompressible flow}
+For simplicity, suppose $\rho=1$. \\
+Momentum equation in x-direction:
+\begin{align*}
+\frac{\partial u}{\partial t}+u \frac{\partial u}{\partial x}+v \frac{\partial u}{\partial y}=-\frac{\partial p}{\partial x}+ \nu (\frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2})
+\tag{1}
+\end{align*}
+Momentum equation in y-direction:
+\begin{align*}
+\frac{\partial v}{\partial t}+u \frac{\partial v}{\partial x}+v \frac{\partial v}{\partial y}=-\frac{\partial p}{\partial y}+ \nu (\frac{\partial^2 v}{\partial x^2}+\frac{\partial^2 v}{\partial y^2})
+\tag{2}
+\end{align*}
+Continuity:  
+\begin{align*}
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}=0
+\tag{3}
+\end{align*}
 
-TBA.
+\subsection{ Vector form}
+Momentum equation:
+\begin{align*}
+\mathbf{u}_t+\mathbf{u}(\nabla \cdot \mathbf{u})=-\nabla p+\nu \nabla^2 \mathbf{u} 
+\tag{4}
+\end{align*}
+Continuity:
+\begin{align*}
+\nabla \cdot \mathbf{u}=0
+\tag{5}
+\end{align*}
+
+\section{Projection algorithm}
+Velocity at $n^{th}$ time-step is denoted as $\mathbf{u}^n$. Convection term is denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
+\begin{align*}
+\frac{\mathbf{u}^{n+1}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=-\nabla p+\mathbf{D}(\mathbf{u}^{{n}}) 
+\tag{6}
+\end{align*}
+Solve for $\mathbf{u}^{n+1}$, we need to decide $\mathbf{P}$ beforehand. Projection algorithm is implemented with intermediate term $\mathbf{u}^{*}$, the momentum equation is split into 2 parts: 
+\begin{align*}
+\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=\mathbf{D}(\mathbf{u}^{{n}}) 
+\tag{6a} 
+\end{align*}
+\begin{align*}
+\frac{\mathbf{u}^{n+1}-\mathbf{u}^{*}}{\Delta t}=-\nabla p
+\tag{6b}
+\end{align*}
+take divergence, the equation becomes
+\begin{align*}
+\frac{\nabla \cdot(\mathbf{u}^{n+1}-\mathbf{u}^{*})}{\Delta t}=-\nabla ^2 p
+\tag{7}
+\end{align*}
+A distinguishing feature of the projection method is that the velocity field is forced to satisfy the continuity as a part of the algorithm, where
+\begin{align*}
+\nabla \cdot(\mathbf{u}^{n+1})=0
+\tag{8}
+\end{align*}
+and therefore  the equation becomes, 
+\begin{align*}
+\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p
+\tag{9}
+\end{align*}
+
+\subsection{The three steps of projection algorithm}
+Step 1- Solve $\mathbf{u}^{*}$
+\begin{align*}
+\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=\mathbf{D}(\mathbf{u}^{{n}}) 
+\tag{6a}
+\end{align*}
+Step 2- Solve $p$
+\begin{align*}
+\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p
+\tag{9}
+\end{align*}
+Step 3- Solve $\mathbf{u}^{n+1}$
+\begin{align*}
+\frac{\mathbf{u}^{n+1}-\mathbf{u}^{*}}{\Delta t}=-\nabla p
+\tag{6b}
+\end{align*}
+
+
+\section{Discretization}
+\subsection{Taylor expansion} 
+\begin{align*}
+f(x+h)=f(x)+f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}+f'''(x)\frac{h^3}{3!}+... \tag{10} \\
+f(x-h)=f(x)-f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}-f'''(x)\frac{h^3}{3!}+... \tag{11} 
+\end{align*}
+First derivatives via (10)-(11)
+\begin{align*}
+f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+2 \times f'''(x)\frac{h^3}{3!}+... \\
+f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+O(h^3) \\
+f'(x)=\frac{f(x+h)-f(x-h)}{2h} 
+\tag{12}
+\end{align*}
+Second derivative via (10)+(11)
+
+\begin{align*}
+f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+4 \times f''''(x)\frac{h^4}{4!} \\
+f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+O(h^4) \\
+f''(x)=\frac{f(x+h)+f(x-h)-2\times f(x)}{h^2}
+\tag{13}
+\end{align*}
+\subsection{The discretized three steps of projection algorithm}
+Step 1- Solve $\mathbf{u}^{*}$
+\begin{align*}
+\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=\mathbf{D}(\mathbf{u}^{{n}}) 
+\tag{6a}
+\end{align*}
+where
+\begin{align*}
+\mathbf{C}(u^n_{i,j})=u^n_{i,j} \cdot \frac{u^n_{e}-u^n_{w}}{\Delta x}+v^n_{p} \cdot \frac{u^n_{n}-u^n_{s}}{\Delta y} \\
+\mathbf{D}(u^n_{i,j})=\nu (\frac{u^n_{e}+ u^n_{w}-2u^n_{i,j}}{(\Delta x/2)^2}+\frac{u^n_{n}+ u^n_{s}-2u^n_{i,j}}{(\Delta y/2)^2})
+\end{align*}
+Step 2- Solve $p$
+\begin{align*}
+\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p
+\tag{9}
+\end{align*}
+where
+\begin{align*}
+\nabla \cdot(\mathbf{u}^{*})=\frac{u^{*}_{e}-u^{*}_{w}}{\Delta x}+\frac{v^{*}_{n}-v^{*}_{s}}{\Delta y} \\
+\nabla ^2 p=\frac{p_{i+1,j}+p_{i-1,j}-2p_{i,j}}{\Delta x^2}+\frac{p_{i,j+1}+p_{i,j-1}-2p_{i,j}}{\Delta y^2}
+\end{align*}
+Step 3- Solve $\mathbf{u}^{n+1}$
+\begin{align*}
+\frac{\mathbf{u}^{n+1}_{i,j}-\mathbf{u}^{*}_{i,j}}{\Delta t}=-\nabla p
+\tag{6b}
+\end{align*}
+where
+\begin{align*}
+\nabla p=\frac{p_{i+1,j}-p_{i,j}}{\Delta x}
+\end{align*}
 
 \clearpage
 

@@ -857,7 +857,7 @@ has the elements in the matrix
   \label{e:euler1d:jaco}
 \end{gather}
 
-\subsection{Shock Tube}
+\subsection{Shock Tube Problem}
 
 Consider a (one-dimensional) tube filled with two gases that are separated by a
 diaphragm (\figurename~\ref{f:tube_at_rest}).
@@ -892,14 +892,21 @@ See \figurename~\ref{f:tube_move_right}.
 \begin{figure}[h]
   \centering
   \includegraphics{tube_zones.eps}
-  \caption{The flow after the diaphragm disrupts in the tube.}
+  \caption{The zones of flow after the diaphragm disrupts in the tube.}
   \label{f:tube_zones}
 \end{figure}
 
 The rupture of the diaphragm generates a right-moving normal shock wave and a
 left-moving expansion wave.
-The flow in the tube looks like
-\figurename~\ref{f:tube_zones}~\citep{anderson_modern_2003}.
+The flow in the tube looks like \figurename~\ref{f:tube_zones}.
+The flow properties in zones 1 and 5 remain unchanged.
+The expansion wave is in zone 2.
+The contact surface is between zones 3 and 4.
+The entropy across the contact surface is discontinuous, but the condition
+$v_3 = v_4 = v_f$ and $p_3 = p_4$ hold.
+The right-moving normal shock wave is between zones 4 and 5.
+Analytical solution of the problem can be obtained by solving the problem of the
+moving shock wave and the expansion wave~\citep{anderson_modern_2003}.
 
 \subsubsection{Moving Normal Shock}
 
@@ -1064,6 +1071,127 @@ obtained by
 \end{align*}
 
 \subsubsection{Expansion Wave}
+
+By using the method of characteristics, the solution of the expansion wave in
+zone 2 is obtained.
+The speed of sound is
+%
+\begin{align}
+  \frac{a}{a_1} = 1 - \frac{\gamma - 1}{2}\frac{v}{a_1}
+  \label{e:ewave:speedofsound}
+\end{align}
+%
+Aided by the relation $a = \sqrt{\gamma R T}$
+%
+\begin{align}
+  \frac{T}{T_1} =
+  \left[1 - \frac{\gamma - 1}{2}\left(\frac{v}{a_1}\right)\right]^2
+  \label{e:ewave:temperature}
+\end{align}
+%
+\begin{align}
+  \frac{p}{p_1} =
+  \left[1 - \frac{\gamma - 1}{2}\left(\frac{v}{a_1}\right)\right]^{
+    \frac{2\gamma}{\gamma-1}}
+  \label{e:ewave:pressure}
+\end{align}
+%
+\begin{align}
+  \frac{\rho}{\rho_1} =
+  \left[1 - \frac{\gamma - 1}{2}\left(\frac{v}{a_1}\right)\right]^{
+    \frac{2}{\gamma-1}}
+  \label{e:ewave:density}
+\end{align}
+
+Plugging Eq.~(\ref{e:ewave:speedofsound}) into the characteristic (passing
+origin)
+%
+\begin{align*}
+  \frac{\dif x}{\dif t} = v - a
+  \quad \Rightarrow \quad x = (v - a) t
+\end{align*}
+%
+and obtain
+%
+\begin{align}
+  v = \frac{2}{\gamma + 1}\left(a_1 + \frac{x}{t}\right)
+\end{align}
+%
+The head of the left-running expansion wave moves at $-a_1$, the speed of sound
+in zone 1.
+
+\subsubsection{Connect the Shock Wave and Expansion Wave Solutions}
+
+The relationship between the shock wave and expansion wave in the shock tube
+can be obtained by the condition across the contact surface, $v_3 = v_4 = v_f$
+and $p_3 = p_4$.
+Recall Eq.~(\ref{e:nshock:v_4}) for the flow speed in zone 4
+%
+\begin{align}
+  v_4 = \frac{a_5}{\gamma} \left(\frac{p_4}{p_5} - 1\right)
+  \left(
+  \dfrac{\dfrac{2\gamma}{\gamma+1}}
+  {\dfrac{p_4}{p_5} + \dfrac{\gamma-1}{\gamma+1}}
+  \right)^{\frac{1}{2}}
+  \tag{\ref{e:nshock:v_4}}
+\end{align}
+%
+Recall Eq.~(\ref{e:ewave:pressure})
+%
+\begin{align}
+  \frac{p_3}{p_1} =
+  \left[1 - \frac{\gamma - 1}{2}\left(\frac{v_3}{a_1}\right)\right]^{
+    \frac{2\gamma}{\gamma-1}}
+  \tag{\ref{e:ewave:pressure}}
+\end{align}
+%
+The flow speed in zone 3 and 4 can be expressed by using the pressure ratio as
+%
+\begin{align*}
+  v_3 = \frac{2 a_1}{\gamma - 1}
+  \left[
+  1 - \left(\frac{p_3}{p_1}\right)^{\frac{\gamma-1}{2\gamma}}
+  \right]
+\end{align*}
+%
+Because $p_3 = p_4$
+%
+\begin{align}
+  v_3 = \frac{2 a_1}{\gamma - 1}
+  \left[
+  1 - \left(\frac{p_4}{p_1}\right)^{\frac{\gamma-1}{2\gamma}}
+  \right]
+  \label{e:tube:v_3}
+\end{align}
+%
+Because $v_3 = v_4$, by combining Eq.~(\ref{e:nshock:v_4}) and the above
+Eq.~(\ref{e:tube:v_3}), we have
+%
+\begin{align*}
+  \frac{a_5}{\gamma} \left(\frac{p_4}{p_5} - 1\right)
+  \left(
+  \dfrac{\dfrac{2\gamma}{\gamma+1}}
+  {\dfrac{p_4}{p_5} + \dfrac{\gamma-1}{\gamma+1}}
+  \right)^{\frac{1}{2}}
+  = \frac{2 a_1}{\gamma - 1}
+  \left[
+  1 - \left(\frac{p_4}{p_1}\right)^{\frac{\gamma-1}{2\gamma}}
+  \right]
+\end{align*}
+%
+It can be rearranged to relate $\frac{p_1}{p_5}$ to $\frac{p_4}{p_5}$ as
+%
+\begin{align}
+  \frac{p_1}{p_5} = \frac{p_4}{p_5}
+  \left\{
+  1 - \frac
+  {(\gamma-1)\dfrac{a_5}{a_1}\left(\dfrac{p_4}{p_5} - 1\right)}
+  {\sqrt{2\gamma
+  \left[
+    2\gamma + (\gamma+1)\left(\dfrac{p_4}{p_5}-1\right)
+    \right]}}
+  \right\}^{-\frac{2\gamma}{\gamma-1}}
+\end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%

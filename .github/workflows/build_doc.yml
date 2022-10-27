@@ -1,0 +1,30 @@
+name: build_doc
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '34 17 * * *'
+
+jobs:
+
+  build_pdf:
+
+    name: build_pdf
+
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: dependency by apt
+      run: |
+        sudo apt-get -qqy update
+        sudo apt-get -qy install texlive-latex-extra texlive-pstricks texlive-science
+
+    - name: make
+      run: |
+        make

@@ -79,26 +79,26 @@ Yi-En Chou and Yung-Yu Chen
 \label{s:projection}
 
 For simplicity, suppose $\rho=1$.
-Momentum equation in x-direction:
+Momentum equation in $x_1$-direction:
 %
 \begin{align}
-\frac{\partial u}{\partial t}+u \frac{\partial u}{\partial x}+v \frac{\partial u}
-{\partial y}=-\frac{\partial p}{\partial x}+ \nu (\frac{\partial^2 u}{\partial x^2}
-+\frac{\partial^2 u}{\partial y^2}) \label{e:x_momentum}
+\frac{\partial v_1}{\partial t}+v_1 \frac{\partial v_1}{\partial x_1}+v_2 \frac{\partial v_1}
+{\partial x_2}=-\frac{\partial p}{\partial x_1}+ \nu (\frac{\partial^2 v_1}{\partial x_1^2}
++\frac{\partial^2 v_1}{\partial x_2^2}) \label{e:x_momentum}
 \end{align}
 %
-Momentum equation in y-direction:
+Momentum equation in $x_2$-direction:
 %
 \begin{align}
-\frac{\partial v}{\partial t}+u \frac{\partial v}{\partial x}+v \frac{\partial v}
-{\partial y}=-\frac{\partial p}{\partial y}+ \nu (\frac{\partial^2 v}{\partial x^2}
-+\frac{\partial^2 v}{\partial y^2}) \label{e:y_momentum}
+\frac{\partial v_2}{\partial t}+v_1 \frac{\partial v_2}{\partial x_1}+v_2 \frac{\partial v_2}
+{\partial x_2}=-\frac{\partial p}{\partial x_2}+ \nu (\frac{\partial^2 v_2}{\partial x_1^2}
++\frac{\partial^2 v_2}{\partial x_2^2}) \label{e:y_momentum}
 \end{align}
 %
 Continuity:  
 %
 \begin{align}
-\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}=0 \label{e:continuity}
+\frac{\partial v_1}{\partial x_1}+\frac{\partial v_2}{\partial x_2}=0 \label{e:continuity}
 \end{align}
 %
 \subsection{Vector form}
@@ -210,10 +210,10 @@ Step 1- Solve $\mathbf{u}^{*}$ with eq(\ref{e:momentum_pj_a})
 where
 %
 \begin{gather}
-\mathbf{C}(u^n_{i,j})=u^n_{i,j} \cdot \frac{u^n_{e}-u^n_{w}}{\Delta x}+v^n_{p} 
-\cdot \frac{u^n_{n}-u^n_{s}}{\Delta y} \\
-\mathbf{D}(u^n_{i,j})=\nu (\frac{u^n_{e}+ u^n_{w}-2u^n_{i,j}}{(\Delta x/2)^2}
-+\frac{u^n_{n}+ u^n_{s}-2u^n_{i,j}}{(\Delta y/2)^2})
+\mathbf{C}({v_1}^n_{i,j})={v_1}^n_{i,j} \cdot \frac{{v_1}^n_{e}-{v_1}^n_{w}}{\Delta x_1}+{v_2}^n_{p} 
+\cdot \frac{{v_1}^n_{n}-{v_1}^n_{s}}{\Delta x_2} \\
+\mathbf{D}({v_1}^n_{i,j})=\nu (\frac{{v_1}^n_{e}+ {v_1}^n_{w}-2{v_1}^n_{i,j}}{(\Delta x_1/2)^2}
++\frac{{v_1}^n_{n}+ {v_1}^n_{s}-2{v_1}^n_{i,j}}{(\Delta x_2/2)^2})
 \end{gather}
 %
 Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
@@ -225,10 +225,10 @@ Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
 where
 %
 \begin{gather}
-\nabla \cdot(\mathbf{u}^{*})=\frac{u^{*}_{e}-u^{*}_{w}}{\Delta x}
-+\frac{v^{*}_{n}-v^{*}_{s}}{\Delta y} \\
-\nabla ^2 p=\frac{p_{i+1,j}+p_{i-1,j}-2p_{i,j}}{\Delta x^2}+\frac{p_{i,j+1}
-+p_{i,j-1}-2p_{i,j}}{\Delta y^2}
+\nabla \cdot(\mathbf{u}^{*})=\frac{{v_1}^{*}_{e}-{v_1}^{*}_{w}}{\Delta x_1}
++\frac{{v_2}^{*}_{n}-{v_2}^{*}_{s}}{\Delta x_2} \\
+\nabla ^2 p=\frac{p_{i+1,j}+p_{i-1,j}-2p_{i,j}}{\Delta x_1^2}+\frac{p_{i,j+1}
++p_{i,j-1}-2p_{i,j}}{\Delta x_2^2}
 \end{gather}
 %
 Step 3- Solve $\mathbf{u}^{n+1}$ with eq(\ref{e:momentum_pj_b})
@@ -240,7 +240,7 @@ Step 3- Solve $\mathbf{u}^{n+1}$ with eq(\ref{e:momentum_pj_b})
 where
 %
 \begin{align}
-\nabla p=\frac{p_{i+1,j}-p_{i,j}}{\Delta x}
+\nabla p=\frac{p_{i+1,j}-p_{i,j}}{\Delta x_1}
 \end{align}
 
 \clearpage

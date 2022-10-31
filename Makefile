@@ -165,4 +165,4 @@ clean_pytex:
 	rm -f $(ALL_SCHPY:.py=.tex)
 
 .PHONY: clean
-clean: clean_tex clean_log clean_eps clean_pytex
+clean: clean_tex clean_log clean_eps

@@ -74,7 +74,7 @@ Yi-En Chou and Yung-Yu Chen
 \end{abstract}
 
 
-\section{Govern equations for 2D incompressible flow}
+\section{Governing equations for 2D incompressible flow}
 %
 \label{s:projection}
 
@@ -105,39 +105,39 @@ Continuity:
 Momentum equation:
 %
 \begin{align}
-\mathbf{u}_t+\mathbf{u}(\nabla \cdot \mathbf{u})=-\nabla p+\nu \nabla^2 \mathbf{u} 
+\mathbf{v}_t+\mathbf{v}(\nabla \cdot \mathbf{v})=-\nabla p+\nu \nabla^2 \mathbf{v} 
 \label{e:momentum_vec}
 \end{align}
 %
 Continuity:
 %
 \begin{align}
-\nabla \cdot \mathbf{u}=0 \label{e:continuity_vec}
+\nabla \cdot \mathbf{v}=0 \label{e:continuity_vec}
 \end{align}
 %
 \section{Projection algorithm}
-Velocity at $n^{th}$ time-step is denoted as $\mathbf{u}^n$. Convection term is 
+Velocity at $n^{th}$ time-step is denoted as $\mathbf{v}^n$. Convection term is 
 denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
 %
 \begin{align}
-\frac{\mathbf{u}^{n+1}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=
--\nabla p+\mathbf{D}(\mathbf{u}^{{n}}) \label{e:momentum_pj} 
+\frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
+-\nabla p+\mathbf{D}(\mathbf{v}^{{n}}) \label{e:momentum_pj} 
 \end{align}
 %
-Solve for $\mathbf{u}^{n+1}$, we need to decide $\mathbf{P}$ beforehand. Projection 
-algorithm is implemented with intermediate term $\mathbf{u}^{*}$, the momentum 
+Solve for $\mathbf{v}^{n+1}$, we need to decide $\mathbf{P}$ beforehand. Projection 
+algorithm is implemented with intermediate term $\mathbf{v}^{*}$, the momentum 
 equation is split into 2 parts: 
 %
 \begin{gather}
-\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=
-\mathbf{D}(\mathbf{u}^{{n}})  \label{e:momentum_pj_a}  \\
-\frac{\mathbf{u}^{n+1}-\mathbf{u}^{*}}{\Delta t}=-\nabla p \label{e:momentum_pj_b}
+\frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
+\mathbf{D}(\mathbf{v}^{{n}})  \label{e:momentum_pj_a}  \\
+\frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \label{e:momentum_pj_b}
 \end{gather}
 %
 having ~(\ref{e:momentum_pj_b}) taken divergence, the equation becomes
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{u}^{n+1}-\mathbf{u}^{*})}{\Delta t}=-\nabla ^2 p
+\frac{\nabla \cdot(\mathbf{v}^{n+1}-\mathbf{v}^{*})}{\Delta t}=-\nabla ^2 p
 \label{e:div_momentum_pj_b}
 \end{align}
 %
@@ -145,33 +145,33 @@ A distinguishing feature of the projection method is that the velocity field is
 forced to satisfy the continuity as a part of the algorithm, where
 %
 \begin{align}
-\nabla \cdot(\mathbf{u}^{n+1})=0 \label{e:continuity_pj}
+\nabla \cdot(\mathbf{v}^{n+1})=0 \label{e:continuity_pj}
 \end{align}
 %
 and therefore  the equation becomes, 
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p \label{e:momentum_pj_c}
+\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \label{e:momentum_pj_c}
 \end{align}
 %
 \subsection{The three steps of projection algorithm}
-Step 1- Solve $\mathbf{u}^{*}$ with eq(\ref{e:momentum_pj_a})
+Step 1- Solve $\mathbf{v}^{*}$ with eq(\ref{e:momentum_pj_a})
 %
 \begin{align}
-\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=
-\mathbf{D}(\mathbf{u}^{{n}})  \nonumber
+\frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
+\mathbf{D}(\mathbf{v}^{{n}})  \nonumber
 \end{align}
 %
 Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p \nonumber
+\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
 \end{align}
 %
-Step 3- Solve $\mathbf{u}^{n+1}$  with eq(\ref{e:momentum_pj_b})
+Step 3- Solve $\mathbf{v}^{n+1}$  with eq(\ref{e:momentum_pj_b})
 %
 \begin{align}
-\frac{\mathbf{u}^{n+1}-\mathbf{u}^{*}}{\Delta t}=-\nabla p \nonumber
+\frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \nonumber
 \end{align}
 %
 \section{Discretization}
@@ -200,11 +200,11 @@ f''(x)=\frac{f(x+h)+f(x-h)-2\times f(x)}{h^2} \label{e:f_2d}
 \end{gather}
 %
 \subsection{The discretized three steps of projection algorithm}
-Step 1- Solve $\mathbf{u}^{*}$ with eq(\ref{e:momentum_pj_a})
+Step 1- Solve $\mathbf{v}^{*}$ with eq(\ref{e:momentum_pj_a})
 %
 \begin{align}
-\frac{\mathbf{u}^{*}-\mathbf{u}^{n}}{\Delta t}+\mathbf{C}(\mathbf{u}^{n})=
-\mathbf{D}(\mathbf{u}^{{n}})  \nonumber
+\frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
+\mathbf{D}(\mathbf{v}^{{n}})  \nonumber
 \end{align}
 %
 where
@@ -219,22 +219,22 @@ where
 Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{u}^{*})}{\Delta t}=\nabla ^2 p \nonumber
+\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
 \end{align}
 %
 where
 %
 \begin{gather}
-\nabla \cdot(\mathbf{u}^{*})=\frac{{v_1}^{*}_{e}-{v_1}^{*}_{w}}{\Delta x_1}
+\nabla \cdot(\mathbf{v}^{*})=\frac{{v_1}^{*}_{e}-{v_1}^{*}_{w}}{\Delta x_1}
 +\frac{{v_2}^{*}_{n}-{v_2}^{*}_{s}}{\Delta x_2} \\
 \nabla ^2 p=\frac{p_{i+1,j}+p_{i-1,j}-2p_{i,j}}{\Delta x_1^2}+\frac{p_{i,j+1}
 +p_{i,j-1}-2p_{i,j}}{\Delta x_2^2}
 \end{gather}
 %
-Step 3- Solve $\mathbf{u}^{n+1}$ with eq(\ref{e:momentum_pj_b})
+Step 3- Solve $\mathbf{v}^{n+1}$ with eq(\ref{e:momentum_pj_b})
 %
 \begin{align}
-\frac{\mathbf{u}^{n+1}_{i,j}-\mathbf{u}^{*}_{i,j}}{\Delta t}=-\nabla p \nonumber
+\frac{\mathbf{v}^{n+1}_{i,j}-\mathbf{v}^{*}_{i,j}}{\Delta t}=-\nabla p \nonumber
 \end{align}
 %
 where

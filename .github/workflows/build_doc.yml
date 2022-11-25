@@ -28,3 +28,10 @@ jobs:
     - name: make
       run: |
         make
+
+    - name: Archive PDF
+      uses: actions/upload-artifact@v3
+      with:
+        name: archive PDF
+        path: |
+          *.pdf

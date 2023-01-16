@@ -63,7 +63,7 @@ ALL_EPS := $(patsubst $(SCHEMATIC_DIR)/%.tex,$(EPS_DIR)/%.eps,$(ALL_TEX)) \
 	$(patsubst $(SCHEMATIC_DIR)/%.py,$(EPS_DIR)/%.eps,$(ALL_SCHPY))
 
 .PHONY: default
-default: cese mesh projection
+default: cese mesh projection 
 
 .PHONY: all
 all: default
@@ -146,6 +146,14 @@ projection_ho: projection.pdf
 	@echo "Generating today's PDF: $(HANDOVER_FN)"
 	mkdir -p $(HANDOVER_DIR)
 	cp -f $< $(HANDOVER_FN)
+
+
+.PHONY: tex
+tex: 
+	sudo apt install chktex
+
+.PHONY: lint
+lint: tex
 
 .PHONY: clean_tex
 clean_tex:

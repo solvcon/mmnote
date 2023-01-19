@@ -24,6 +24,12 @@ jobs:
       run: |
         sudo apt-get -qqy update
         sudo apt-get -qy install texlive-latex-extra texlive-pstricks texlive-science
+        # for lint
+        sudo apt-get -qy install chktex
+
+    - name: lint check
+      run: |
+        make lint | true
 
     - name: make
       run: |

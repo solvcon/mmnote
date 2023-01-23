@@ -152,7 +152,7 @@ projection_ho: projection.pdf
 tex: 
 	chktex cese.tex
 	chktex projection.tex
-	chktex utmesh.tex
+	chktex ustmesh.tex
 
 .PHONY: lint
 lint: tex

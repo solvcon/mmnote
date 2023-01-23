@@ -27,13 +27,12 @@ jobs:
         # for lint
         sudo apt-get -qy install chktex
 
-    - name: lint check
-      run: |
-        make lint
-
     - name: make
       run: |
         make
+
+    - name: lint check
+      run: |
         make lint
 
     - name: Archive PDF

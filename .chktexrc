@@ -1,0 +1,8 @@
+# ChkTeX documentation: https://megalinter.io/v6/descriptors/latex_chktex/#chktex-documentation
+# ChkTeX Official Web Site: https://www.nongnu.org/chktex/
+# Explanation of error messages: https://www.nongnu.org/chktex/ChkTeX.pdf
+# Resource flie for .chktexrc: https://github.com/overleaf/chktex/blob/master/chktexrc
+
+
+## projection.tex
+NumDash{ 1 2 }

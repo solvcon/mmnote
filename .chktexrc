@@ -1,8 +1,13 @@
-# ChkTeX documentation: https://megalinter.io/v6/descriptors/latex_chktex/#chktex-documentation
 # ChkTeX Official Web Site: https://www.nongnu.org/chktex/
-# Explanation of error messages: https://www.nongnu.org/chktex/ChkTeX.pdf
-# Resource flie for .chktexrc: https://github.com/overleaf/chktex/blob/master/chktexrc
+# ChkTeX manual: https://www.nongnu.org/chktex/ChkTeX.pdf
+# Format for .chktexrc: https://github.com/overleaf/chktex/blob/master/chktexrc
 
+# Appends
+NumDash { 1 } #Warning 8
 
-## projection.tex
-NumDash{ 1 2 }
+# Overwrite
+Linker = { \vref \pageref \eqref } # Warning 2
+PostLink = { \index } # Warning 24
+
+# Warning that has no hyperlink in thr right is not yet solved,
+# including warning 3, 10, 17, 25, 36 and 37.

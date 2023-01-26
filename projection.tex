@@ -74,9 +74,7 @@ Yi-En Chou and Yung-Yu Chen
 \end{abstract}
 
 
-\section{Governing equations for 2D incompressible flow}
-%
-\label{s:projection}
+\section{Governing equations for 2D incompressible flow}\label{s:projection}
 
 For simplicity, suppose $\rho=1$.
 Momentum equation in $x_1$-direction:
@@ -134,7 +132,7 @@ equation is split into 2 parts:
 \frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \label{e:momentum_pj_b}
 \end{gather}
 %
-having ~(\ref{e:momentum_pj_b}) taken divergence, the equation becomes
+having~(\ref{e:momentum_pj_b}) taken divergence, the equation becomes
 %
 \begin{align}
 \frac{\nabla \cdot(\mathbf{v}^{n+1}-\mathbf{v}^{*})}{\Delta t}=-\nabla ^2 p
@@ -155,20 +153,20 @@ and therefore  the equation becomes,
 \end{align}
 %
 \subsection{The three steps of projection algorithm}
-Step 1- Solve $\mathbf{v}^{*}$ with eq(\ref{e:momentum_pj_a})
+Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:momentum_pj_a})
 %
 \begin{align}
 \frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
 \mathbf{D}(\mathbf{v}^{{n}})  \nonumber
 \end{align}
 %
-Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
+Step 2- Solve $p$ with eq (\ref{e:momentum_pj_c})
 %
 \begin{align}
 \frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
 \end{align}
 %
-Step 3- Solve $\mathbf{v}^{n+1}$  with eq(\ref{e:momentum_pj_b})
+Step 3- Solve $\mathbf{v}^{n+1}$  with eq (\ref{e:momentum_pj_b})
 %
 \begin{align}
 \frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \nonumber
@@ -178,29 +176,29 @@ Step 3- Solve $\mathbf{v}^{n+1}$  with eq(\ref{e:momentum_pj_b})
 \subsection{Taylor expansion}
 %
 \begin{gather}
-f(x+h)=f(x)+f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}+f'''(x)\frac{h^3}{3!}+...  \label{e:FD} \\
-f(x-h)=f(x)-f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}-f'''(x)\frac{h^3}{3!}+...  \label{e:BD} 
+f(x+h)=f(x)+f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}+f^{(3)}(x)\frac{h^3}{3!}+ \ldots  \label{e:FD} \\
+f(x-h)=f(x)-f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}-f^{(3)}(x)\frac{h^3}{3!}+ \ldots  \label{e:BD} 
 \end{gather}
 %
-First derivatives via eq(\ref{e:FD})-eq(\ref{e:BD})
+First derivatives via eq (\ref{e:FD})-eq (\ref{e:BD})
 %
 \begin{gather}
-f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+2 \times f'''(x)\frac{h^3}{3!}+... \nonumber \\
+f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+2 \times f^{(3)}(x)\frac{h^3}{3!}+ \ldots \nonumber \\
 f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+O(h^3) \nonumber \\
 f'(x)=\frac{f(x+h)-f(x-h)}{2h}  \label{e:f_1d}
 \end{gather}
 %
-Second derivative via eq(\ref{e:FD})+eq(\ref{e:BD})
+Second derivative via eq (\ref{e:FD})+eq (\ref{e:BD})
 %
 \begin{gather}
-f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+4 \times f''''(x)
+f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+4 \times f^{(4)}(x)
 \frac{h^4}{4!} \nonumber \\
 f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+O(h^4) \nonumber \\
 f''(x)=\frac{f(x+h)+f(x-h)-2\times f(x)}{h^2} \label{e:f_2d}
 \end{gather}
 %
 \subsection{The discretized three steps of projection algorithm}
-Step 1- Solve $\mathbf{v}^{*}$ with eq(\ref{e:momentum_pj_a})
+Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:momentum_pj_a})
 %
 \begin{align}
 \frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
@@ -212,11 +210,11 @@ where
 \begin{gather}
 \mathbf{C}({v_1}^n_{i,j})={v_1}^n_{i,j} \cdot \frac{{v_1}^n_{e}-{v_1}^n_{w}}{\Delta x_1}+{v_2}^n_{p} 
 \cdot \frac{{v_1}^n_{n}-{v_1}^n_{s}}{\Delta x_2} \\
-\mathbf{D}({v_1}^n_{i,j})=\nu (\frac{{v_1}^n_{e}+ {v_1}^n_{w}-2{v_1}^n_{i,j}}{(\Delta x_1/2)^2}
-+\frac{{v_1}^n_{n}+ {v_1}^n_{s}-2{v_1}^n_{i,j}}{(\Delta x_2/2)^2})
+\mathbf{D}({v_1}^n_{i,j})=\nu (\frac{{v_1}^n_{e}+ {v_1}^n_{w}-2{v_1}^n_{i,j}}{{\Delta x_1/2}^2}
++\frac{{v_1}^n_{n}+ {v_1}^n_{s}-2{v_1}^n_{i,j}}{{\Delta x_2/2}^2})
 \end{gather}
 %
-Step 2- Solve $p$ with eq(\ref{e:momentum_pj_c})
+Step 2- Solve $p$ with eq (\ref{e:momentum_pj_c})
 %
 \begin{align}
 \frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
@@ -231,7 +229,7 @@ where
 +p_{i,j-1}-2p_{i,j}}{\Delta x_2^2}
 \end{gather}
 %
-Step 3- Solve $\mathbf{v}^{n+1}$ with eq(\ref{e:momentum_pj_b})
+Step 3- Solve $\mathbf{v}^{n+1}$ with eq (\ref{e:momentum_pj_b})
 %
 \begin{align}
 \frac{\mathbf{v}^{n+1}_{i,j}-\mathbf{v}^{*}_{i,j}}{\Delta t}=-\nabla p \nonumber

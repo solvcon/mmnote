@@ -1,0 +1,11 @@
+# ChkTeX Official Web Site: https://www.nongnu.org/chktex/
+# ChkTeX manual: https://www.nongnu.org/chktex/ChkTeX.pdf
+# Format for .chktexrc: https://github.com/overleaf/chktex/blob/master/chktexrc
+
+# Appends
+NumDash { 1 } #Warning 8
+
+# Overwrite
+Linker = { \vref \pageref \eqref } # Warning 2
+PostLink = { \index } # Warning 24
+

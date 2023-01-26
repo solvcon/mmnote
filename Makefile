@@ -147,6 +147,14 @@ projection_ho: projection.pdf
 	mkdir -p $(HANDOVER_DIR)
 	cp -f $< $(HANDOVER_FN)
 
+
+.PHONY: tex
+tex: 
+	chktex cese.tex projection.tex ustmesh.tex
+
+.PHONY: lint
+lint: tex
+
 .PHONY: clean_tex
 clean_tex:
 	rm -f *.aux *.bbl *.blg *.dvi *.log *.out *.xwm *.toc *.pdf *.ps \

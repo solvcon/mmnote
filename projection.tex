@@ -113,7 +113,7 @@ Continuity:
 \nabla \cdot \mathbf{v}=0 \label{e:continuity_vec}
 \end{align}
 %
-\section{Projection algorithm}
+\section{Projection algorithm \cite{ferziger_cfd_2019}}
 Velocity at $n^{th}$ time-step is denoted as $\mathbf{v}^n$. Convection term is 
 denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
 %
@@ -173,7 +173,7 @@ Step 3- Solve $\mathbf{v}^{n+1}$  with eq (\ref{e:momentum_pj_b})
 \end{align}
 %
 \section{Discretization}
-\subsection{Taylor expansion}
+\subsection{Taylor expansion \cite{ferziger_numerical_1981}}
 %
 \begin{gather}
 f(x+h)=f(x)+f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}+f^{(3)}(x)\frac{h^3}{3!}+ \ldots  \label{e:FD} \\

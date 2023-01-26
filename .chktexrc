@@ -9,5 +9,3 @@ NumDash { 1 } #Warning 8
 Linker = { \vref \pageref \eqref } # Warning 2
 PostLink = { \index } # Warning 24
 
-# Warning that has no hyperlink in thr right is not yet solved,
-# including warning 3, 10, 17, 25, 36 and 37.

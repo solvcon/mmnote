@@ -76,8 +76,10 @@ Yi-En Chou and Yung-Yu Chen
 
 \section{Governing equations for 2D incompressible flow}\label{s:projection}
 
-For simplicity, suppose $\rho=1$.
-Momentum equation in $x_1$-direction:
+Flow characteristics of viscous incompressible flow is depicted via the law of 
+conservation of momentum, for fluid it is the Navier-Stokes equation, and the 
+law of conservation of mass, or the continuity. Suppose $\rho=1$ for simplicity, 
+momentum equation in $x_1$-direction:
 %
 \begin{align}
 \frac{\partial v_1}{\partial t}+v_1 \frac{\partial v_1}{\partial x_1}+v_2 \frac{\partial v_1}
@@ -100,7 +102,8 @@ Continuity:
 \end{align}
 %
 \subsection{Vector form}
-Momentum equation:
+Governing equations can be written in vector form, where the momentum equations 
+in vector form is:
 %
 \begin{align}
 \mathbf{v}_t+\mathbf{v}(\nabla \cdot \mathbf{v})=-\nabla p+\nu \nabla^2 \mathbf{v} 
@@ -113,7 +116,7 @@ Continuity:
 \nabla \cdot \mathbf{v}=0 \label{e:continuity_vec}
 \end{align}
 %
-\section{Projection algorithm \cite{ferziger_cfd_2019}}
+\section{Projection method}
 Velocity at $n^{th}$ time-step is denoted as $\mathbf{v}^n$. Convection term is 
 denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
 %
@@ -122,65 +125,74 @@ denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
 -\nabla p+\mathbf{D}(\mathbf{v}^{{n}}) \label{e:momentum_pj} 
 \end{align}
 %
-Solve for $\mathbf{v}^{n+1}$, we need to decide $\mathbf{P}$ beforehand. Projection 
-algorithm is implemented with intermediate term $\mathbf{v}^{*}$, the momentum 
-equation is split into 2 parts: 
+Projection method\cite{ferziger_cfd_2019} split eq(\ref{e:momentum_pj}) into
 %
 \begin{gather}
-\frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
-\mathbf{D}(\mathbf{v}^{{n}})  \label{e:momentum_pj_a}  \\
-\frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \label{e:momentum_pj_b}
+\frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=-\nabla 
+p^{n}+\mathbf{D}(\mathbf{v}^{{n}}) \label{e:projection1}\ \\
+\frac{\mathbf{v}^{**}-\mathbf{v}^{*}}{\Delta t}=\nabla p^n \label{e:projection2}\\
+\frac{\mathbf{v}^{n+1}-\mathbf{v}^{**}}{\Delta t}=-\nabla p^{n+1}  \label{e:projection3}\
 \end{gather}
 %
-having~(\ref{e:momentum_pj_b}) taken divergence, the equation becomes
+having~ eq(\ref{e:projection3}) taken divergence, the equation becomes
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{v}^{n+1}-\mathbf{v}^{*})}{\Delta t}=-\nabla ^2 p
+\frac{\nabla \cdot(\mathbf{v}^{n+1}-\mathbf{v}^{**})}{\Delta t}=-\nabla ^2 p
 \label{e:div_momentum_pj_b}
 \end{align}
 %
-A distinguishing feature of the projection method is that the velocity field is 
+A distinguishing feature of projection method is that the velocity field is 
 forced to satisfy the continuity as a part of the algorithm, where
 %
 \begin{align}
 \nabla \cdot(\mathbf{v}^{n+1})=0 \label{e:continuity_pj}
 \end{align}
 %
-and therefore  the equation becomes, 
+and therefore the equation becomes, 
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \label{e:momentum_pj_c}
+\frac{\nabla \cdot \mathbf{v}^{**}}{\Delta t}=\nabla ^2 p \label{e:projection4}
 \end{align}
 %
-\subsection{The three steps of projection algorithm}
-Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:momentum_pj_a})
+\subsection{The four steps of projection algorithm}
+Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:projection1})
 %
 \begin{align}
 \frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
 \mathbf{D}(\mathbf{v}^{{n}})  \nonumber
 \end{align}
 %
-Step 2- Solve $p$ with eq (\ref{e:momentum_pj_c})
+Step 2- Solve $\mathbf{v}^{**}$ with eq (\ref{e:projection2})
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
+\frac{\mathbf{v}^{**}-\mathbf{v}^{*}}{\Delta t}=\nabla p^n \nonumber
 \end{align}
 %
-Step 3- Solve $\mathbf{v}^{n+1}$  with eq (\ref{e:momentum_pj_b})
+Step 3- Solve $p$ with eq (\ref{e:projection4})
 %
 \begin{align}
-\frac{\mathbf{v}^{n+1}-\mathbf{v}^{*}}{\Delta t}=-\nabla p \nonumber
+\frac{\nabla \cdot \mathbf{v}^{**}}{\Delta t}=\nabla ^2 p \nonumber
+\end{align}
+%
+Step 4- Solve $\mathbf{v}^{n+1}$  with eq (\ref{e:projection3})
+%
+\begin{align}
+\frac{\mathbf{v}^{n+1}-\mathbf{v}^{**}}{\Delta t}=-\nabla p^{n+1} \nonumber
 \end{align}
 %
 \section{Discretization}
-\subsection{Taylor expansion \cite{ferziger_numerical_1981}}
+\subsection{Taylor-Series Expansion}
+Discretized equations consists of approximating derivatives with truncated Taylor
+-Series Expansion\cite{patankar_numerical_1980}, where Talor-series expansion 
+about position $x$ are
 %
 \begin{gather}
 f(x+h)=f(x)+f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}+f^{(3)}(x)\frac{h^3}{3!}+ \ldots  \label{e:FD} \\
 f(x-h)=f(x)-f'(x)\frac{h}{1!}+f''(x)\frac{h^2}{2!}-f^{(3)}(x)\frac{h^3}{3!}+ \ldots  \label{e:BD} 
 \end{gather}
 %
-First derivatives via eq (\ref{e:FD})-eq (\ref{e:BD})
+First derivatives is obtained via eq (\ref{e:FD})-eq (\ref{e:BD}) truncating the 
+third term in the series, where
 %
 \begin{gather}
 f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+2 \times f^{(3)}(x)\frac{h^3}{3!}+ \ldots \nonumber \\
@@ -188,7 +200,8 @@ f(x+h)-f(x-h)=2\times f'(x)\frac{h}{1!}+O(h^3) \nonumber \\
 f'(x)=\frac{f(x+h)-f(x-h)}{2h}  \label{e:f_1d}
 \end{gather}
 %
-Second derivative via eq (\ref{e:FD})+eq (\ref{e:BD})
+Second derivative via eq (\ref{e:FD})+eq (\ref{e:BD}) truncating the fourth term 
+in the series, where
 %
 \begin{gather}
 f(x+h)+f(x-h)=2\times f(x)+2 \times f''(x)\frac{h^2}{2!}+4 \times f^{(4)}(x)
@@ -198,7 +211,7 @@ f''(x)=\frac{f(x+h)+f(x-h)-2\times f(x)}{h^2} \label{e:f_2d}
 \end{gather}
 %
 \subsection{The discretized three steps of projection algorithm}
-Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:momentum_pj_a})
+Step 1- Solve $\mathbf{v}^{*}$ with eq (\ref{e:projection1})
 %
 \begin{align}
 \frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=
@@ -210,35 +223,52 @@ where
 \begin{gather}
 \mathbf{C}({v_1}^n_{i,j})={v_1}^n_{i,j} \cdot \frac{{v_1}^n_{e}-{v_1}^n_{w}}{\Delta x_1}+{v_2}^n_{p} 
 \cdot \frac{{v_1}^n_{n}-{v_1}^n_{s}}{\Delta x_2} \\
-\mathbf{D}({v_1}^n_{i,j})=\nu (\frac{{v_1}^n_{e}+ {v_1}^n_{w}-2{v_1}^n_{i,j}}{{\Delta x_1/2}^2}
-+\frac{{v_1}^n_{n}+ {v_1}^n_{s}-2{v_1}^n_{i,j}}{{\Delta x_2/2}^2})
+\mathbf{D}({v_1}^n_{i,j})=\nu (\frac{{v_1}^n_{e}+ {v_1}^n_{w}-2{v_1}^n_{i,j}}{{(\Delta x_1/2)}^2}
++\frac{{v_1}^n_{n}+ {v_1}^n_{s}-2{v_1}^n_{i,j}}{{(\Delta x_2/2)}^2})
 \end{gather}
 %
-Step 2- Solve $p$ with eq (\ref{e:momentum_pj_c})
+Step 2- Solve $\mathbf{v}^{**}$ with eq (\ref{e:projection2})
 %
 \begin{align}
-\frac{\nabla \cdot(\mathbf{v}^{*})}{\Delta t}=\nabla ^2 p \nonumber
+\frac{\mathbf{v}^{**}-\mathbf{v}^{*}}{\Delta t}=\nabla p^n \nonumber
 \end{align}
 %
 where
 %
 \begin{gather}
-\nabla \cdot(\mathbf{v}^{*})=\frac{{v_1}^{*}_{e}-{v_1}^{*}_{w}}{\Delta x_1}
+\nabla \cdot \mathbf{v}^{**}=\frac{{v_1}^{**}_{e}-{v_1}^{**}_{w}}{\Delta x_1}
++\frac{{v_2}^{**}_{n}-{v_2}^{**}_{s}}{\Delta x_2} \\
+\nabla \cdot \mathbf{v}^{*}=\frac{{v_1}^{*}_{e}-{v_1}^{*}_{w}}{\Delta x_1}
 +\frac{{v_2}^{*}_{n}-{v_2}^{*}_{s}}{\Delta x_2} \\
-\nabla ^2 p=\frac{p_{i+1,j}+p_{i-1,j}-2p_{i,j}}{\Delta x_1^2}+\frac{p_{i,j+1}
-+p_{i,j-1}-2p_{i,j}}{\Delta x_2^2}
+\nabla p^n=\frac{p^n_{i+1,j}-p^n_{i-1,j}}{2\Delta x_1} \cdot \hat{i}+\frac{p^n_{i,j+1}
+-p^n_{i,j-1}}{2\Delta x_2}  \cdot \hat{j}
 \end{gather}
 %
-Step 3- Solve $\mathbf{v}^{n+1}$ with eq (\ref{e:momentum_pj_b})
+Step 3- Solve $p^{n+1}$ with eq (\ref{e:projection4})
 %
 \begin{align}
-\frac{\mathbf{v}^{n+1}_{i,j}-\mathbf{v}^{*}_{i,j}}{\Delta t}=-\nabla p \nonumber
+\frac{\nabla \cdot \mathbf{v}^{**}}{\Delta t}=\nabla ^2 p^{n+1} \nonumber
+\end{align}
+%
+where
+%
+\begin{gather}
+\nabla ^2 p^{n+1}=\frac{p^{n+1}_{i+1,j}+p^{n+1}_{i-1,j}-2p^{n+1}_{i,j}}{\Delta x_1^2}
++\frac{p^{n+1}_{i,j+1}+p^{n+1}_{i,j-1}-2p^{n+1}_{i,j}}{\Delta x_2^2}
+\end{gather}
+%
+Step 4- Solve $\mathbf{v}^{n+1}$ with eq (\ref{e:projection3})
+%
+\begin{align}
+\frac{\mathbf{v}^{n+1}_{i,j}-\mathbf{v}^{**}_{i,j}}{\Delta t}=-\nabla p \nonumber
 \end{align}
 %
 where
 %
 \begin{align}
-\nabla p=\frac{p_{i+1,j}-p_{i,j}}{\Delta x_1}
+\nabla p^{n+1}=\frac{p^{n+1}_{i+1,j}-p^{n+1}_{i-1,j}}{2\Delta x_1} \cdot 
+\hat{i}+\frac{p^{n+1}_{i,j+1}
+-p_{i,j-1}}{2\Delta x_2}  \cdot \hat{j}
 \end{align}
 
 \clearpage

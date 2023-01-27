@@ -1,4 +1,5 @@
 % (C) 2022 Yung-Yu Chen.  All rights reserved.
+% chktex-file 7
 
 \RequirePackage[2020-02-02]{latexrelease}
 \documentclass[11pt,dvips]{article}
@@ -125,7 +126,7 @@ denoted as $\mathbf{C}$, and diffusion term is denoted $\mathbf{D}$.
 -\nabla p+\mathbf{D}(\mathbf{v}^{{n}}) \label{e:momentum_pj} 
 \end{align}
 %
-Projection method\cite{ferziger_cfd_2019} split eq(\ref{e:momentum_pj}) into
+Projection method\cite{ferziger_cfd_2019} split eq (\ref{e:momentum_pj}) into
 %
 \begin{gather}
 \frac{\mathbf{v}^{*}-\mathbf{v}^{n}}{\Delta t}+\mathbf{C}(\mathbf{v}^{n})=-\nabla 
@@ -134,7 +135,7 @@ p^{n}+\mathbf{D}(\mathbf{v}^{{n}}) \label{e:projection1}\ \\
 \frac{\mathbf{v}^{n+1}-\mathbf{v}^{**}}{\Delta t}=-\nabla p^{n+1}  \label{e:projection3}\
 \end{gather}
 %
-having~ eq(\ref{e:projection3}) taken divergence, the equation becomes
+having~eq (\ref{e:projection3}) taken divergence, the equation becomes
 %
 \begin{align}
 \frac{\nabla \cdot(\mathbf{v}^{n+1}-\mathbf{v}^{**})}{\Delta t}=-\nabla ^2 p

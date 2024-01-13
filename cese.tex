@@ -117,7 +117,7 @@ The CEs discretize the space-time for the integral equation to be solved
 associated with the grid point $(x_j, t^n)$.  In the CE, the conservation of
 $\mathbf{h}$ is approximated as
 \begin{align}
-  \oint_{S(\mathrm{CE})}\mathbf{h}^*\cdot d\hat{\sigma} = 0
+  \oint_{S(\mathrm{CE})}\mathbf{h}^*\cdot \dif\hat{\sigma} = 0
   \label{e:conserv_of_approx_h}
 \end{align}
 where $\mathbf{h}^*$, which will be defined later with SEs, denotes the
@@ -127,7 +127,7 @@ adjacent basic conservation elements (BCEs) $\mathrm{CE}_-$ and
 $\mathrm{CE}_+$.  Equation (\ref{e:conserv_of_approx_h}) holds in both CCEs and
 BCEs, i.e.,
 \begin{align*}
-  \oint_{S(\mathrm{CE}_\pm)}\mathbf{h}^*\cdot d\hat{\sigma} = 0 .
+  \oint_{S(\mathrm{CE}_\pm)}\mathbf{h}^*\cdot \dif\hat{\sigma} = 0 .
 \end{align*}
 $S(\mathrm{CE}_{\pm})$ is the bounding surface surrounding $\mathrm{CE}_{\pm}$.
 

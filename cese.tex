@@ -89,17 +89,17 @@ an integral equation over the control surface $S(V)$ surrounding $V$
 \end{align}
 $\dif\hat{\sigma}$ is the infinitesimal surface vector.  Equation
 (\ref{e:cese:1d_integral_form}) does not require the point-wise divergence free
-condition, and it is what the CESE method solves \citep{chang_method_1995}.
+condition.
 
-It is important that the CESE method solves the integral equation, rather than
-the differential equation, by enforcing the space-time flux conservation as
-shown in Eq.~(\ref{e:cese:1d_integral_form}).  The solution variable and its
-partial derivative in space are independent but solved together.  It uses a
-compact stencil that defines two entities: the conservation elements (CEs) and
-solution elements (SEs).  Space-time invariants are used to minimize numerical
-dissipation, but the characteristics-based methods are not used for obtaining
-solution.  Ad hoc treatments are avoided as much as possible.  The detail of
-the theory can be found in \cite{chang_new_1991} and \cite{chang_method_1995}.
+The CESE method solves the integral equation, instead of the differential
+equation, by enforcing the space-time flux conservation as shown in
+Eq.~(\ref{e:cese:1d_integral_form}) \citep{chang_method_1995}.  The solution
+variable and its partial derivative in space are independent but solved
+together.  It uses a compact stencil that defines two entities: the
+conservation element (CE) and solution element (SE).  Space-time invariants are
+used to minimize numerical dissipation, but the characteristics-based methods
+are not used for obtaining solution.  Ad hoc treatments are avoided as much as
+possible.  \cite{chang_new_1991} and \cite{chang_method_1995}.
 
 \begin{figure}[htbp]
 \centering
@@ -290,9 +290,9 @@ $x_{j-\frac{1}{2}}$ and $x_{j+\frac{1}{2}}$.  To define the weighting function,
 let
 \begin{align*}
   (u_{x\pm})_j^{n+\frac{1}{2}} \defeq
-    \pm\frac{
+    \frac{
       (u')_{j\pm\frac{1}{2}}^n - u_j^{n+\frac{1}{2}}
-    }{\Delta x_j^{\pm}}
+    }{x_{j\pm\frac{1}{2}} - x_j}
 \end{align*}
 be the spatial differences in the two intervals $[x_j, x_{j+\frac{1}{2}}]$ and
 $[x_{j-\frac{1}{2}}, x_j]$, respectively.  The weighted average of the spatial

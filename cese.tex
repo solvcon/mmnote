@@ -97,17 +97,17 @@ an integral equation over the control surface $S(V)$ surrounding $V$
 \end{align}
 $\dif\hat{\sigma}$ is the infinitesimal surface vector.  Equation
 (\ref{e:cese:1d_integral_form}) does not require the point-wise divergence free
-condition, and it is what the CESE method solves \citep{chang_method_1995}.
+condition.
 
-It is important that the CESE method solves the integral equation, rather than
-the differential equation, by enforcing the space-time flux conservation as
-shown in Eq.~(\ref{e:cese:1d_integral_form}).  The solution variable and its
-partial derivative in space are independent but solved together.  It uses a
-compact stencil that defines two entities: the conservation elements (CEs) and
-solution elements (SEs).  Space-time invariants are used to minimize numerical
-dissipation, but the characteristics-based methods are not used for obtaining
-solution.  Ad hoc treatments are avoided as much as possible.  The detail of
-the theory can be found in \cite{chang_new_1991} and \cite{chang_method_1995}.
+The CESE method solves the integral equation, instead of the differential
+equation, by enforcing the space-time flux conservation as shown in
+Eq.~(\ref{e:cese:1d_integral_form}) \citep{chang_method_1995}.  The solution
+variable and its partial derivative in space are independent but solved
+together.  It uses a compact stencil that defines two entities: the
+conservation element (CE) and solution element (SE).  Space-time invariants are
+used to minimize numerical dissipation, but the characteristics-based methods
+are not used for obtaining solution.  Ad hoc treatments are avoided as much as
+possible.  \cite{chang_new_1991} and \cite{chang_method_1995}.
 
 \begin{figure}[htbp]
 \centering
@@ -125,7 +125,7 @@ The CEs discretize the space-time for the integral equation to be solved
 associated with the grid point $(x_j, t^n)$.  In the CE, the conservation of
 $\mathbf{h}$ is approximated as
 \begin{align}
-  \oint_{S(\mathrm{CE})}\mathbf{h}^*\cdot d\hat{\sigma} = 0
+  \oint_{S(\mathrm{CE})}\mathbf{h}^*\cdot \dif\hat{\sigma} = 0
   \label{e:conserv_of_approx_h}
 \end{align}
 where $\mathbf{h}^*$, which will be defined later with SEs, denotes the
@@ -135,7 +135,7 @@ adjacent basic conservation elements (BCEs) $\mathrm{CE}_-$ and
 $\mathrm{CE}_+$.  Equation (\ref{e:conserv_of_approx_h}) holds in both CCEs and
 BCEs, i.e.,
 \begin{align*}
-  \oint_{S(\mathrm{CE}_\pm)}\mathbf{h}^*\cdot d\hat{\sigma} = 0 .
+  \oint_{S(\mathrm{CE}_\pm)}\mathbf{h}^*\cdot \dif\hat{\sigma} = 0 .
 \end{align*}
 $S(\mathrm{CE}_{\pm})$ is the bounding surface surrounding $\mathrm{CE}_{\pm}$.
 
@@ -298,9 +298,9 @@ $x_{j-\frac{1}{2}}$ and $x_{j+\frac{1}{2}}$.  To define the weighting function,
 let
 \begin{align*}
   (u_{x\pm})_j^{n+\frac{1}{2}} \defeq
-    \pm\frac{
+    \frac{
       (u')_{j\pm\frac{1}{2}}^n - u_j^{n+\frac{1}{2}}
-    }{\Delta x_j^{\pm}}
+    }{x_{j\pm\frac{1}{2}} - x_j}
 \end{align*}
 be the spatial differences in the two intervals $[x_j, x_{j+\frac{1}{2}}]$ and
 $[x_{j-\frac{1}{2}}, x_j]$, respectively.  The weighted average of the spatial
